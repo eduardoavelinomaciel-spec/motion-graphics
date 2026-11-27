@@ -28,3 +28,7 @@ npx remotion still EquipeSil out/EquipeSil.png --gl=swangle
 - Mapa de planos (frame local da cena): 0–150 Elias caminha; 150–345 Rita (fio azul, lenço ~f300); 540–690 entregador (laranja); 735–860 menino (amarelo); 985–1130 plano geral, todas as auras e fios; 1130–1240 push; 1235–1350 mergulho no peito + dissolve em pixels.
 - Render: `npx remotion render src/index.ts Parte1 out/chunks/p1_N.mp4 --frames=A-B --gl=swangle --crf=18 --muted --concurrency=2` (350 quadros ≈ 7 min; 2 CPUs), concat + `public/audio/parte1.wav` (-18,5 LUFS, pico -3,6 dBFS).
 - Pendências conhecidas: braços rígidos ("salsicha"), Jorge/Bia (retoques), mão no peito pouco expressiva, lenço pequeno.
+
+## Cena 2 — página de HQ (0:50–1:40, origem do dom)
+- `src/scenes/Cena2.tsx`: 5 quadros de HQ com mini-cenas 3D (criança sente ondas / separa orbes em frascos / adulto filtra a multidão / ajuda Rita: azul→menta / noite, cidade acesa). Câmera de página foca cada quadro e abre na página inteira (f1320–1400), zoom final + fade (f1455–1500).
+- Áudio: `scripts/score_cena2.py` → `public/audio/cena2.wav` (-18,5 LUFS). Render igual à Parte 1 (≈0,65 s/quadro).
