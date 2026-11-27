@@ -13,7 +13,7 @@ const BolhaCard: React.FC = () => {
   return (
     <AbsoluteFill>
       <style>{fontCss}</style>
-      <Caption t={t} from={0.3} to={2.6} text="TUDO COMEÇOU COM UMA BOLHA…" x="50%" y="84%" size={60} />
+      <Caption t={t} from={0.2} to={1.75} text="TUDO COMEÇOU COM UMA BOLHA…" x="50%" y="84%" size={60} />
     </AbsoluteFill>
   );
 };
@@ -35,6 +35,11 @@ export const Parte1: React.FC<{ audio: boolean }> = ({ audio }) => (
         <Sequence name="Áudio gancho" durationInFrames={ABERTURA_FRAMES}>
           <Audio src={staticFile("audio/gancho.wav")} />
         </Sequence>
+        {[Math.round(0.35 * 30), Math.round(8.2 * 30), ABERTURA_FRAMES + 6].map((at) => (
+          <Sequence key={at} name="plic" from={at} durationInFrames={12}>
+            <Audio src={staticFile("audio/plic.wav")} volume={0.35} />
+          </Sequence>
+        ))}
         <Sequence name="Áudio título e cena 1" from={ABERTURA_FRAMES}>
           <Audio src={staticFile("audio/parte1.wav")} />
         </Sequence>

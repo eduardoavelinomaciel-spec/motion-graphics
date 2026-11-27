@@ -18,18 +18,37 @@ export const ease = (a: number, b: number, t: number) => {
   return x * x * (3 - 2 * x);
 };
 
-// Comic "recordatório" caption box (yellow, black border, Bangers) with a pop-in.
+// Comic "recordatório" caption box (yellow, ink border, halftone, Bangers).
+// The box pops in elastically (0 → 1.1 → 1 in 8 frames, guide §1) and each word lands in turn.
 export const Caption: React.FC<{
   text: string; t: number; from: number; to: number; x?: string; y?: string; size?: number; align?: "center" | "left";
 }> = ({ text, t, from, to, x = "50%", y = "50%", size = 76, align = "center" }) => {
-  const a = interpolate(t, [from, from + 0.25, to - 0.3, to], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  if (a <= 0) return null;
-  const pop = interpolate(t, [from, from + 0.25], [0.8, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const out = interpolate(t, [to - 0.25, to], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  if (t < from || out <= 0) return null;
+  const pop = interpolate(t, [from, from + 5 / 30, from + 8 / 30], [0, 1.1, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const words = text.split(" ");
   return (
-    <div style={{ position: "absolute", left: x, top: y, transform: `translate(-50%,-50%) scale(${pop}) rotate(-1.5deg)`, opacity: a,
-      background: "#ffe066", border: "7px solid #10141f", boxShadow: "10px 10px 0 #10141f", padding: "18px 38px",
-      fontFamily: "Bangers", fontSize: size, letterSpacing: 2, color: "#10141f", textAlign: align, maxWidth: "78%", lineHeight: 1.08 }}>
-      {text}
+    <div style={{ position: "absolute", left: x, top: y, transform: `translate(-50%,-50%) scale(${pop * (0.6 + 0.4 * out)}) rotate(-1.5deg)`, opacity: out,
+      maxWidth: "80%", filter: "drop-shadow(10px 10px 0 #10141f)" }}>
+      <div style={{ background: "#10141f", padding: 7, clipPath: "polygon(0.6% 2%, 99% 0%, 100% 97%, 1.5% 100%)" }}>
+      <div style={{ position: "relative", background: "#ffe066", padding: "20px 42px",
+        clipPath: "polygon(0.6% 2%, 99% 0%, 100% 97%, 1.5% 100%)" }}>
+        {/* halftone */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle, rgba(214,120,0,0.28) 2.6px, transparent 3px)", backgroundSize: "11px 11px" }} />
+        <div style={{ position: "relative", fontFamily: "Bangers", fontSize: size, letterSpacing: 2, color: "#10141f", textAlign: align, lineHeight: 1.08 }}>
+          {words.map((w, i) => {
+            const a = from + 0.12 + i * 0.07;
+            const s = interpolate(t, [a, a + 4 / 30, a + 7 / 30], [0, 1.18, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+            const r = (rnd(i, 9) - 0.5) * 5;
+            return (
+              <span key={i} style={{ display: "inline-block", transform: `scale(${s}) rotate(${r}deg)`, marginRight: "0.28em" }}>
+                {w}
+              </span>
+            );
+          })}
+        </div>
+      </div>
+      </div>
     </div>
   );
 };
