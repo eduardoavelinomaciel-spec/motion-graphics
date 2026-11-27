@@ -4,3 +4,5 @@ motion/
 *.mov
 __pycache__/
 *.pyc
+films/*/out/
+films/*/node_modules/
