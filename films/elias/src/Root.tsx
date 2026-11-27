@@ -3,6 +3,8 @@ import { Composition, Folder, Still } from "remotion";
 import { Parte1 } from "./scenes/Parte1";
 import { Titulo } from "./scenes/Titulo";
 import { Cena3 } from "./scenes/Cena3";
+import { Cena4 } from "./scenes/Cena4";
+import { Cena5 } from "./scenes/Cena5";
 import { Cena2 } from "./scenes/Cena2";
 import { Cena1 } from "./scenes/Cena1";
 import { Equipe, Expressoes, One } from "./sheets/Cast";
@@ -18,6 +20,8 @@ export const RemotionRoot: React.FC = () => (
       <Composition id="Titulo" component={Titulo} width={1920} height={1080} fps={30} durationInFrames={150} />
       <Composition id="Parte1" component={Parte1} width={1920} height={1080} fps={30} durationInFrames={1500} />
       <Composition id="Cena3" component={Cena3} width={1920} height={1080} fps={30} durationInFrames={1500} />
+      <Composition id="Cena5" component={Cena5} width={1920} height={1080} fps={30} durationInFrames={1500} />
+      <Composition id="Cena4" component={Cena4} width={1920} height={1080} fps={30} durationInFrames={1500} />
       <Composition id="Cena2" component={Cena2} width={1920} height={1080} fps={30} durationInFrames={1500} />
       <Composition id="Cena1" component={Cena1} width={1920} height={1080} fps={30} durationInFrames={1350} />
     </Folder>

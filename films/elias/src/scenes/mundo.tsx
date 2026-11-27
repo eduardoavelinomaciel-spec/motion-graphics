@@ -63,3 +63,10 @@ export const PEDS: Ped[] = Array.from({ length: 16 }).map((_, i) => {
   return { x0: target - dir * v * 1100, z: [-2.4, -1.7, 1.9, -2.1, -1.4][i % 5], dir, v, idx: i, kind: KINDS[(i * 3 + 1) % KINDS.length] };
 });
 export const pedX = (p: Ped, f: number) => p.x0 + p.dir * p.v * f;
+
+export const setScene = (fog: string, density: number, light: [number, number, number]) => {
+  sceneUniforms.uSilhouette.value = 0;
+  sceneUniforms.uLightDir.value.set(light[0], light[1], light[2]);
+  sceneUniforms.uFogColor.value = new THREE.Color(fog);
+  sceneUniforms.uFogDensity.value = density;
+};

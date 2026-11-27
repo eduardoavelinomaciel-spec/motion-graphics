@@ -33,7 +33,7 @@ const Crowd: React.FC = () => (
   </svg>
 );
 
-export const Pictoballoon: React.FC<{ x: number; y: number; w: number; h: number; tail: [number, number]; t: number }> = ({ x, y, w, h, tail, t }) => {
+export const Pictoballoon: React.FC<{ x: number; y: number; w: number; h: number; tail: [number, number]; t: number; left?: React.ReactNode; right?: React.ReactNode }> = ({ x, y, w, h, tail, t, left, right }) => {
   if (t <= 0) return null;
   const sc = t < 1 ? 1.12 * Math.sin((t * Math.PI) / 2) : 1;
   const panelW = (w - 70) / 2;
@@ -46,8 +46,8 @@ export const Pictoballoon: React.FC<{ x: number; y: number; w: number; h: number
           <rect x={x + w * 0.3 - 4} y={y + h - 26} width={w * 0.15 + 8} height="14" fill="#fff" />
         </g>
       </svg>
-      <div style={{ position: "absolute", left: x + 25, top: y + 25, width: panelW, height: h - 50, border: "6px solid #10141f", transform: `scale(${sc})`, overflow: "hidden", background: "#fff" }}><Cake /></div>
-      <div style={{ position: "absolute", left: x + 45 + panelW, top: y + 25, width: panelW, height: h - 50, border: "6px solid #10141f", transform: `scale(${sc})`, overflow: "hidden", background: "#fff" }}><Crowd /></div>
+      <div style={{ position: "absolute", left: x + 25, top: y + 25, width: panelW, height: h - 50, border: "6px solid #10141f", transform: `scale(${sc})`, overflow: "hidden", background: "#fff" }}>{left ?? <Cake />}</div>
+      <div style={{ position: "absolute", left: x + 45 + panelW, top: y + 25, width: panelW, height: h - 50, border: "6px solid #10141f", transform: `scale(${sc})`, overflow: "hidden", background: "#fff" }}>{right ?? <Crowd />}</div>
       <div style={{ display: "none", fontFamily: HQ }} />
     </div>
   );
