@@ -36,3 +36,8 @@ npx remotion still EquipeSil out/EquipeSil.png --gl=swangle
 ## Cena 3 — o padeiro (1:40–2:30)
 - `src/scenes/Cena3.tsx` + `world/Bakery.tsx` + `fx/Pictoballoon.tsx` (balão pictográfico com 2 mini-quadros: bolo premiado / multidão aplaudindo). Antônio triste (aura azul+laranja) → Elias senta, pão quente → balão → primeiro sorriso (estrelas amarelas, luz da padaria fica dourada). Elias sai pela porta; dissolve em pixels nos últimos 12 quadros.
 - Áudio: `scripts/score_cena3.py` → `public/audio/cena3.wav`.
+
+## Cenas 4–8 e montagem final
+- Cena 4 (menina/balão), 5 (banco, Sr. Jorge), 6 (praça à noite, sobrecarga), 7 (Rita, tela dividida HQ), 8 (colina + cartão final em pixels). Kit compartilhado: `scenes/kit.tsx`, `world/Props.tsx`, `fx/Pictos.tsx`, `fx/PixelText.tsx`; trilhas em `scripts/score_rest.py`; `scripts/norm.sh`, `scripts/assemble.sh`.
+- Vídeo completo: `out/elias_completo.mp4` (1920×1080, 30 fps, 5:45, ≈ -18,5 LUFS), concatenado sem recodificar.
+- Falhas conhecidas: braços rígidos, poses sentadas simples, cenário simples, balão amarelo grande demais na mão da menina.

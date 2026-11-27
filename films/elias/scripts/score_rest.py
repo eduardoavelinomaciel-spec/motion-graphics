@@ -48,5 +48,59 @@ def cena4():
     s.motif(900, 0.38, 0.55, 0)
     s.out(1488, "cena4")
 
+def cena5():
+    s = S(50.0, 51, 160, 0.03)
+    s.steps(8, 300, 17, 0.05, -0.4)
+    s.pad(20, ["B2", "F#3", "D4"], 8.0, 0.26, att=1.6, bright=800); s.drops(40, 18, 22, 0.09)
+    s.m.place(noise_burst(0.3, 900), F(360), 0.05, -0.3)
+    s.motif(420, 0.34, 0.55, -0.2)
+    s.pop(580); s.bells(595, ["B4", "D5", "F#5", "B5"], 0.15, 0.16, -0.3)
+    s.pad(590, ["B2", "F#3", "D4", "A4"], 6.5, 0.27, att=1.5, bright=1700)
+    s.m.place(echo(celesta(note("F#5"), 1.4, 0.7), 0.25, 0.3, 3), F(760), 0.12, 0.2)   # mão no ombro
+    s.motif(780, 0.38, 0.5, 0)
+    s.pad(960, ["D3", "A3", "D4", "F#4", "A4"], 8.0, 0.32, att=1.2, rel=2.5, bright=2400)
+    s.bells(980, ["F#5", "A5", "D6", "F#6"], 0.17, 0.12, 0.2); s.sparkle(1100, 24)
+    s.motif(1200, 0.36, 0.6, 0)
+    s.out(1488, "cena5")
+
+def cena6():
+    s = S(40.0, 61, 150, 0.04)
+    s.pad(0, ["B1", "F#2", "D3"], 12.0, 0.26, att=2.5, rel=3, bright=600)
+    s.pad(500, ["B1", "E2", "G#2", "D3"], 14.0, 0.26, att=3, rel=3, bright=700)
+    for i in range(8):
+        t = 40 + i * 118
+        s.steps(t + 10, t + 110, 15, 0.035, -0.5 if i % 2 else 0.5)
+        s.m.place(lp(s.r.uniform(-1, 1, int(SR * 0.5)), 500), F(t + 40), 0.04 + 0.01 * i, 0)       # murmúrio da pressa
+        s.m.place(echo(celesta(note(["D4", "F4", "A3", "C4"][i % 4]), 1.4, 0.7), 0.3, 0.3, 3), F(t + 60), 0.06 + 0.01 * i, 0.4)
+    s.m.place(noise_burst(1.5, 700), F(850), 0.06, 0)
+    s.m.place(strings([note("C#3"), note("G3"), note("D4")], 10.0, att=3.5, rel=3, bright=900, trem=5), F(850), 0.22)
+    s.out(1188, "cena6")
+
+def cena7():
+    s = S(30.0, 71, 150, 0.035)
+    s.pad(0, ["B1", "F#2", "D3"], 8.0, 0.22, att=2.0, bright=700)
+    s.steps(70, 285, 17, 0.05, 0.5)
+    s.m.place(noise_burst(0.3, 900), F(310), 0.05, 0.3)
+    s.m.place(echo(celesta(note("E5"), 1.4, 0.8), 0.25, 0.3, 3), F(380), 0.14, 0.0)      # a mão
+    s.pad(380, ["D3", "A3", "F#4"], 6.0, 0.26, att=1.0, bright=1600)
+    s.pad(470, ["D3", "A3", "D4", "F#4", "A4"], 9.0, 0.34, att=1.0, rel=3, bright=2600)  # abraço
+    s.bells(480, ["F#5", "A5", "D6", "F#6"], 0.17, 0.12, 0.2); s.sparkle(520, 30)
+    s.motif(540, 0.4, 0.5, 0)
+    s.pop(610); s.bells(625, ["B4", "D5", "F#5", "B5"], 0.15, 0.16, -0.3)
+    s.motif(700, 0.38, 0.5, 0.0, 1)
+    s.out(888, "cena7")
+
+def cena8():
+    s = S(25.0, 81, 200, 0.03)
+    s.steps(8, 100, 17, 0.045, 0)
+    s.pad(10, ["D3", "A3", "F#4"], 8.0, 0.26, att=1.5, bright=1600)
+    s.pad(130, ["D3", "A3", "D4", "F#4", "A4"], 10.0, 0.32, att=1.5, rel=3, bright=2600)
+    s.sparkle(130, 50, 0.04, 0.12); s.bells(180, ["F#5", "A5", "D6", "F#6", "A6"], 0.16, 0.14, 0.1)
+    s.motif(240, 0.4, 0.55, 0, 1)
+    s.m.place(strings([note("D2"), note("A2"), note("D3")], 8.0, att=1.5, rel=3, bright=1200), F(520), 0.3)
+    s.bells(580, ["D5", "F#5", "A5"], 0.14, 0.4, 0.0)
+    s.m.place(echo(celesta(note("D6"), 3.0, 1.2), 0.4, 0.35, 4), F(640), 0.16, 0)
+    s.out(740, "cena8")
+
 if __name__ == "__main__":
     for n in sys.argv[1:]: globals()[n]()

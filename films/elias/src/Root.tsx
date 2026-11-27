@@ -5,6 +5,9 @@ import { Titulo } from "./scenes/Titulo";
 import { Cena3 } from "./scenes/Cena3";
 import { Cena4 } from "./scenes/Cena4";
 import { Cena5 } from "./scenes/Cena5";
+import { Cena6 } from "./scenes/Cena6";
+import { Cena7 } from "./scenes/Cena7";
+import { Cena8 } from "./scenes/Cena8";
 import { Cena2 } from "./scenes/Cena2";
 import { Cena1 } from "./scenes/Cena1";
 import { Equipe, Expressoes, One } from "./sheets/Cast";
@@ -20,6 +23,9 @@ export const RemotionRoot: React.FC = () => (
       <Composition id="Titulo" component={Titulo} width={1920} height={1080} fps={30} durationInFrames={150} />
       <Composition id="Parte1" component={Parte1} width={1920} height={1080} fps={30} durationInFrames={1500} />
       <Composition id="Cena3" component={Cena3} width={1920} height={1080} fps={30} durationInFrames={1500} />
+      <Composition id="Cena8" component={Cena8} width={1920} height={1080} fps={30} durationInFrames={750} />
+      <Composition id="Cena7" component={Cena7} width={1920} height={1080} fps={30} durationInFrames={900} />
+      <Composition id="Cena6" component={Cena6} width={1920} height={1080} fps={30} durationInFrames={1200} />
       <Composition id="Cena5" component={Cena5} width={1920} height={1080} fps={30} durationInFrames={1500} />
       <Composition id="Cena4" component={Cena4} width={1920} height={1080} fps={30} durationInFrames={1500} />
       <Composition id="Cena2" component={Cena2} width={1920} height={1080} fps={30} durationInFrames={1500} />
