@@ -56,7 +56,7 @@ export const Elias: React.FC<CharProps> = ({ scale = 1, ...rest }) => {
       button: ellipsoid(0.028, 0.028, 0.016, 12, 8),
       hairBack: ellipsoid(0.295, 0.31, 0.3),
       tuft: ellipsoid(0.075, 0.06, 0.06),
-      temple: ellipsoid(0.02, 0.075, 0.045),
+      temple: ellipsoid(0.014, 0.05, 0.03),
       lapel: ellipsoid(0.07, 0.2, 0.03),
     };
   }, [scale]);
@@ -84,8 +84,8 @@ export const Elias: React.FC<CharProps> = ({ scale = 1, ...rest }) => {
           <Toon geometry={m.tuft} material={m.hair} outline={m.olS} position={[0.09, 0.22, 0.12]} rotation={[0.5, 0, -0.5]} />
           <Toon geometry={m.tuft} material={m.hair} outline={m.olS} position={[-0.05, 0.235, 0.13]} rotation={[0.5, 0, 0.3]} />
           <Toon geometry={m.tuft} material={m.hair} outline={m.olS} position={[-0.17, 0.19, 0.1]} rotation={[0.3, 0, 0.8]} />
-          <Toon geometry={m.temple} material={m.grey} outline={m.olS} position={[0.258, 0.09, 0.1]} rotation={[0.1, 0.5, -0.1]} />
-          <Toon geometry={m.temple} material={m.grey} outline={m.olS} position={[-0.258, 0.09, 0.1]} rotation={[0.1, -0.5, 0.1]} />
+          <Toon geometry={m.temple} material={m.grey} outline={m.olS} position={[0.245, 0.13, 0.06]} rotation={[0.1, 0.5, -0.1]} />
+          <Toon geometry={m.temple} material={m.grey} outline={m.olS} position={[-0.245, 0.13, 0.06]} rotation={[0.1, -0.5, 0.1]} />
         </group>
       }
     />

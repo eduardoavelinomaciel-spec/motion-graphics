@@ -2,13 +2,13 @@ import React from "react";
 import { AbsoluteFill, useCurrentFrame } from "remotion";
 
 // Layer 7 (GRADE): vignette + 2% grain. Deterministic grain: the seed is the frame.
-export const Grade: React.FC<{ vignette?: number; grain?: number; tint?: string }> = ({ vignette = 0.38, grain = 0.05, tint }) => {
+export const Grade: React.FC<{ vignette?: number; grain?: number; tint?: string; vc?: string }> = ({ vignette = 0.38, grain = 0.05, tint, vc = "4,20,38" }) => {
   const frame = useCurrentFrame();
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       {tint ? <AbsoluteFill style={{ background: tint, mixBlendMode: "soft-light" }} /> : null}
       <AbsoluteFill
-        style={{ background: `radial-gradient(ellipse at 50% 48%, rgba(0,0,0,0) 55%, rgba(4,20,38,${vignette}) 100%)` }}
+        style={{ background: `radial-gradient(ellipse at 50% 48%, rgba(0,0,0,0) 55%, rgba(${vc},${vignette}) 100%)` }}
       />
       <svg width="100%" height="100%" style={{ position: "absolute", opacity: grain, mixBlendMode: "overlay" }}>
         <filter id={`g${frame}`}>

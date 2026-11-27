@@ -22,3 +22,9 @@ npx remotion still Equipe out/Equipe.png --gl=swangle      # ficha
 npx remotion still Expressoes out/Expressoes.png --gl=swangle
 npx remotion still EquipeSil out/EquipeSil.png --gl=swangle
 ```
+
+## Parte 1 (título + cena 1) — 0:00–0:50
+- Título 0–150 (pixels voam e formam "O HOMEM QUE / SENTIA TUDO"), Cena 1 = frames 150–1500.
+- Mapa de planos (frame local da cena): 0–150 Elias caminha; 150–345 Rita (fio azul, lenço ~f300); 540–690 entregador (laranja); 735–860 menino (amarelo); 985–1130 plano geral, todas as auras e fios; 1130–1240 push; 1235–1350 mergulho no peito + dissolve em pixels.
+- Render: `npx remotion render src/index.ts Parte1 out/chunks/p1_N.mp4 --frames=A-B --gl=swangle --crf=18 --muted --concurrency=2` (350 quadros ≈ 7 min; 2 CPUs), concat + `public/audio/parte1.wav` (-18,5 LUFS, pico -3,6 dBFS).
+- Pendências conhecidas: braços rígidos ("salsicha"), Jorge/Bia (retoques), mão no peito pouco expressiva, lenço pequeno.

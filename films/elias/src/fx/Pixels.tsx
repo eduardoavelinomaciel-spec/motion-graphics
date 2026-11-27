@@ -116,12 +116,12 @@ export const chestSprites = (c: V3, f: number, colors: string[], amt: number, n 
 
 const VERT = /* glsl */ `
 attribute float aSize; attribute float aShape; attribute float aAlpha; attribute vec3 aCol;
-uniform float uPx;
+uniform float uPx; uniform float uK;
 varying float vShape; varying float vA; varying vec3 vCol;
 void main() {
   vec4 mv = modelViewMatrix * vec4(position, 1.0);
   float d = max(0.1, -mv.z);
-  float px = aSize * uPx / d;
+  float px = aSize * uK * uPx / d;
   gl_PointSize = 7.0 * max(1.0, floor(px / 7.0 + 0.5));
   gl_Position = projectionMatrix * mv;
   vShape = aShape; vA = aAlpha; vCol = aCol;
@@ -157,9 +157,10 @@ void main() {
   #include <colorspace_fragment>
 }`;
 
-export const PixelPoints: React.FC<{ sprites: Spr[]; px: number }> = ({ sprites, px }) => {
-  const mat = useMemo(() => new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms: { uPx: { value: 1 } }, transparent: false }), []);
+export const PixelPoints: React.FC<{ sprites: Spr[]; px: number; k?: number }> = ({ sprites, px, k = 1 }) => {
+  const mat = useMemo(() => new THREE.ShaderMaterial({ vertexShader: VERT, fragmentShader: FRAG, uniforms: { uPx: { value: 1 }, uK: { value: 1 } }, transparent: false }), []);
   mat.uniforms.uPx.value = px;
+  mat.uniforms.uK.value = k;
   const geo = useMemo(() => {
     const g = new THREE.BufferGeometry();
     const n = sprites.length;

@@ -36,7 +36,7 @@ const pedras = () => {
       const wave = Math.sin((x / S) * Math.PI * 4) * 14;
       const band = Math.floor((y + wave + 64) / 32) % 2;
       const stone = (x % 8 === 0 || y % 8 === 0) ? 0.78 : 1;
-      const v = (band ? 24 : 236) * stone + (band ? 0 : 0);
+      const v = (band ? 150 : 236) * stone;
       const i = (y * S + x) * 4;
       img.data[i] = v * (band ? 1.0 : 0.97); img.data[i + 1] = v; img.data[i + 2] = v * (band ? 1.2 : 1.03); img.data[i + 3] = 255;
     }
@@ -106,14 +106,14 @@ export const Street: React.FC<{ camX: number; range?: number; kiosk?: boolean }>
   const tx0 = Math.floor((x0 - 4) / 13), tx1 = Math.ceil((x1 - 4) / 13);
   const trees: number[] = [];
   for (let k = tx0; k <= tx1; k++) trees.push(4 + 13 * k);
-  const posts = [9.1, 22, 37, 52, 67, -6, -21].filter((x) => x > x0 - 3 && x < x1 + 3);
+  const posts = [13.4, 27.5, 40.5, 52, 67, -6, -21].filter((x) => x > x0 - 3 && x < x1 + 3);
   const cx = Math.round(camX / 4) * 4;
 
   return (
     <group>
       {/* chão */}
-      <mesh position={[camX, -0.01, 8.8]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[range * 2 + 20, 13]} />
+      <mesh position={[camX, -0.01, 24]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[range * 2 + 20, 44]} />
         <primitive object={m.road} attach="material" />
       </mesh>
       <mesh position={[camX, 0.0, 2.15]} rotation={[-Math.PI / 2, 0, 0]}>
@@ -143,7 +143,7 @@ export const Street: React.FC<{ camX: number; range?: number; kiosk?: boolean }>
         const floors = Math.floor((b.h - 3.8) / 3.3);
         return (
           <group key={i} position={[b.x, 0, -3.2]}>
-            <Toon geometry={g.kiosk} material={m.wall[b.ci]} outline={m.olL} position={[0, b.h / 2, -2.2]} scale={[b.w / 3.6, b.h / 3.6, 4 / 2.4]} />
+            <Toon geometry={g.kiosk} material={m.wall[b.ci]} outline={m.olL} position={[0, b.h / 2 - 0.35, -2.2]} scale={[b.w / 3.6, b.h / 3.6, 4 / 2.4]} />
             <Toon geometry={g.cornice} material={m.cornice} outline={m.olS} position={[0, b.h + 0.1, -0.1]} scale={[b.w + 0.3, 1, 1.2]} />
             {Array.from({ length: floors }).map((_, fl) =>
               Array.from({ length: cols }).map((__, c) => {
@@ -172,7 +172,7 @@ export const Street: React.FC<{ camX: number; range?: number; kiosk?: boolean }>
 
       {/* árvores de copa larga */}
       {trees.map((x) => (
-        <group key={x} position={[x, 0, 1.55]}>
+        <group key={x} position={[x, 0, -2.4]}>
           <Toon geometry={g.trunk} material={m.trunk} outline={m.olS} position={[0, 4.8, 0]} />
           {[[0, 6.2, 0, 2.4], [-1.8, 5.6, 0.4, 1.9], [1.9, 5.7, -0.2, 2.0], [0.2, 7.6, -0.3, 1.9], [-0.8, 6.9, 1.0, 1.6]].map((c, i) => (
             <Toon key={i} geometry={g.clump} material={i % 2 ? m.leaf2 : m.leaf} outline={m.ol} position={[c[0], c[1], c[2]]} scale={[c[3] * 1.25, c[3], c[3] * 1.1]} />
@@ -182,7 +182,7 @@ export const Street: React.FC<{ camX: number; range?: number; kiosk?: boolean }>
 
       {/* postes de ferro verde */}
       {posts.map((x) => (
-        <group key={x} position={[x, 0, x === 9.1 ? 0.75 : 1.75]}>
+        <group key={x} position={[x, 0, x === 13.4 ? 0.75 : 1.75]}>
           <Toon geometry={g.base} material={m.iron} outline={m.olS} position={[0, 0.35, 0]} />
           <Toon geometry={g.post} material={m.iron} outline={m.olS} position={[0, 6.4, 0]} />
           <Toon geometry={g.arm} material={m.iron} outline={m.olS} position={[0, 6.2, 0]} />
