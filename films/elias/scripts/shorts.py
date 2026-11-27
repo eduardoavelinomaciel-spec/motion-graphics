@@ -101,7 +101,7 @@ def build(s):
     for p, *_ in ovs: cmd += ["-i", p]
     last = "base"
     for i, (p, x0, y0, t0, t1) in enumerate(ovs):
-        idx = n + i
+        idx = 1 + i
         parts.append(f"[{last}][{idx}:v]overlay={x0}:{y0}:enable='between(t,{t0},{t1})'[o{i}]")
         last = f"o{i}"
     parts.append(f"[{last}]drawbox=x=0:y=1904:w='1080*t/{dur}':h=16:color=0xFFD23F@0.95:t=fill[outv]")
