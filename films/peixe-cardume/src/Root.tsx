@@ -2,6 +2,7 @@ import React from "react";
 import { Composition, Folder } from "remotion";
 import { Test } from "./sheets/Test";
 import { CiroViews, MaeViews, CiroSil, MaeSil, CiroExpr } from "./sheets/Ficha";
+import { MarisaViews, MarisaSil, PolvoViews, PolvoSil, SeahorseSheet } from "./sheets/Ficha2";
 import { FishCompare } from "./sheets/FishCompare";
 
 export const RemotionRoot: React.FC = () => (
@@ -16,6 +17,11 @@ export const RemotionRoot: React.FC = () => (
       <Composition id="CiroSil" component={CiroSil} width={1920} height={1080} fps={30} durationInFrames={60} />
       <Composition id="MaeSil" component={MaeSil} width={1920} height={1080} fps={30} durationInFrames={60} />
       <Composition id="CiroExpr" component={CiroExpr} width={1920} height={1080} fps={30} durationInFrames={60} />
+      <Composition id="MarisaViews" component={MarisaViews} width={1920} height={1080} fps={30} durationInFrames={60} />
+      <Composition id="MarisaSil" component={MarisaSil} width={1920} height={1080} fps={30} durationInFrames={60} />
+      <Composition id="PolvoViews" component={PolvoViews} width={1920} height={1080} fps={30} durationInFrames={60} />
+      <Composition id="PolvoSil" component={PolvoSil} width={1920} height={1080} fps={30} durationInFrames={60} />
+      <Composition id="SeahorseSheet" component={SeahorseSheet} width={1920} height={1080} fps={30} durationInFrames={60} />
     </Folder>
   </>
 );
