@@ -22,6 +22,15 @@ const starShape = (r1: number, r2: number) => {
   return sh;
 };
 
+// World position of the tip of Marisa's right front flipper (mirrors the render transforms).
+export const marisaRightTip = (o: { position: [number, number, number]; rotation?: [number, number, number]; scale?: number; rFlip: [number, number, number] }) => {
+  const s = o.scale ?? 1;
+  const root = new THREE.Matrix4().compose(new THREE.Vector3(...o.position), new THREE.Quaternion().setFromEuler(new THREE.Euler(...(o.rotation ?? [0, 0, 0]))), new THREE.Vector3(s, s, s));
+  const grp = new THREE.Matrix4().compose(new THREE.Vector3(0.75, 0, 0.72), new THREE.Quaternion().setFromEuler(new THREE.Euler(...o.rFlip)), new THREE.Vector3(1, 1, 1));
+  const inner = new THREE.Matrix4().makeRotationX(Math.PI / 2);
+  return new THREE.Vector3(1.0, 0, -0.1).applyMatrix4(inner).applyMatrix4(grp).applyMatrix4(root);
+};
+
 // Dona Marisa: old green sea turtle. Faces +x.
 export const Marisa: React.FC<{
   time: number;
@@ -29,10 +38,11 @@ export const Marisa: React.FC<{
   paddle?: number; // flipper stroke amplitude 0..1
   headTilt?: number;
   reach?: number; // right front flipper reaching forward (drawing in the sand / touching Ciro)
+  rFlip?: [number, number, number] | null; // absolute Euler for the right front flipper (overrides stroke/reach)
   position?: [number, number, number];
   rotation?: [number, number, number];
   scale?: number;
-}> = ({ time, expr = "calma", paddle = 0.4, headTilt = 0, reach = 0, position, rotation, scale = 1 }) => {
+}> = ({ time, expr = "calma", paddle = 0.4, headTilt = 0, reach = 0, rFlip = null, position, rotation, scale = 1 }) => {
   const g = useMemo(() => {
     const shell = new THREE.SphereGeometry(1, 48, 24, 0, Math.PI * 2, 0, Math.PI / 2);
     shell.scale(1.25, 0.62, 1.0);
@@ -133,7 +143,7 @@ export const Marisa: React.FC<{
         <mesh geometry={g.mouth} material={m.ink} />
       </group>
       {/* front flippers */}
-      <group position={[0.75, 0.0, 0.72]} rotation={[0.5 * stroke, -1.75 + 0.45 * stroke + reach * 1.6, -0.15 + 0.35 * stroke]}>
+      <group position={[0.75, 0.0, 0.72]} rotation={rFlip ?? [0.5 * stroke, -1.75 + 0.45 * stroke + reach * 1.6, -0.15 + 0.35 * stroke]}>
         <Toon geometry={g.front} material={m.skin} outline={m.thin} rotation={[Math.PI / 2, 0, 0]} />
       </group>
       <group position={[0.75, 0.0, -0.72]} rotation={[-0.5 * stroke, 1.75 - 0.45 * stroke, -0.15 + 0.35 * stroke]}>

@@ -33,6 +33,19 @@ export const SHALLOW: Look = {
   rays: 1,
 };
 
+// Set 3 — pedra solitária: dimmer water, weak light from above
+export const LONE: Look = {
+  top: "#4a97b3",
+  mid: "#12506d",
+  deep: "#072b40",
+  fog: "#104a66",
+  fogDensity: 0.042,
+  sand: "#c9c2a4",
+  sandShadow: "#94927f",
+  caustic: 0.08,
+  rays: 0.5,
+};
+
 export const applyLook = (l: Look, time: number) => {
   sceneUniforms.uFogColor.value.set(l.fog);
   sceneUniforms.uFogDensity.value = l.fogDensity;

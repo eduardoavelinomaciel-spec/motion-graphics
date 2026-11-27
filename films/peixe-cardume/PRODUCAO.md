@@ -57,3 +57,22 @@ Técnica: o azul aberto (sem chão) é desenhado em canvas 2D (`fx/PixelWorld.ts
 pixel-dissolve e o 1-bit exatos; Ciro fica numa camada 3D própria, sem efeito.
 Áudio: `scripts/synth.py` (vozes) + `scripts/score_cena2.py`; normalização por ganho estático
 (não `loudnorm` dinâmico) para não levantar o silêncio.
+
+## Abertura (gancho) — decisão do autor
+Mantida a abertura de 11,5 s da sessão paralela, sem fala, com as frases em letreiro de HQ:
+recordatório amarelo com contorno de tinta irregular, retícula, palavras entrando uma a uma
+(pop elástico) e um "plic" de balão por caixa. A terceira frase sai antes de o título pousar.
+
+## Mapa da Parte 3 · Cena 3 (Dona Marisa)
+| Local | Plano |
+|---|---|
+| 0–12 | Pixel-bloom 320→1920 com flash, já na pedra solitária |
+| 0–296 | Close 3/4 no Ciro na reentrância; lágrimas viram bolhinhas que sobem tremendo |
+| 296–336 | A sombra passa; impact frame de 3 frames (negativo P&B) |
+| 340–540 | Tilt-up: Dona Marisa desce em contra-plongée |
+| 540–690 | Plano a dois; ela se acomoda e pisca devagar, os dois olhos |
+| 700–888 | Balão pictográfico: cardume em espiral + `?`; Ciro diz "sim" com o corpo inteiro |
+| 900–1075 | Ela desenha na areia uma onda que termina em seta; a areia brilha |
+| 1080–1200 | Aponta para cima; câmera sobe: a corrente de plâncton, toda na mesma direção |
+| 1200–1484 | Ciro olha a corrente, olha para ela; ela pisca; ele sai da toca; sobem juntos |
+| 1484–1500 | Whip-pan (desfoque direcional) para a cena 4 |
