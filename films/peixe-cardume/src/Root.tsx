@@ -6,6 +6,9 @@ import { Expressions } from "./sheets/Expressions";
 import { Cena1, CENA1_FRAMES } from "./scenes/Cena1";
 import { Titulo, TITULO_FRAMES } from "./scenes/Titulo";
 import { Parte1, PARTE1_FRAMES } from "./scenes/Parte1";
+import { Cena2, CENA2_FRAMES } from "./scenes/Cena2";
+import { Parte2, PARTE2_FRAMES } from "./scenes/Parte2";
+import { Filme, FILME_FRAMES } from "./scenes/Filme";
 import { CiroViews, MaeViews, CiroSil, MaeSil, CiroExpr } from "./sheets/Ficha";
 import { MarisaViews, MarisaSil, PolvoViews, PolvoSil, SeahorseSheet } from "./sheets/Ficha2";
 import { FishCompare } from "./sheets/FishCompare";
@@ -19,8 +22,11 @@ export const RemotionRoot: React.FC = () => (
     </Folder>
     <Folder name="Cenas">
       <Composition id="Titulo" component={Titulo} width={1920} height={1080} fps={30} durationInFrames={TITULO_FRAMES} />
+      <Composition id="Cena2" component={Cena2} width={1920} height={1080} fps={30} durationInFrames={CENA2_FRAMES} />
       <Composition id="Cena1" component={Cena1} width={1920} height={1080} fps={30} durationInFrames={CENA1_FRAMES} />
     </Folder>
+    <Composition id="Filme" component={Filme} width={1920} height={1080} fps={30} durationInFrames={FILME_FRAMES} />
+    <Composition id="Parte2" component={Parte2} width={1920} height={1080} fps={30} durationInFrames={PARTE2_FRAMES} defaultProps={{ audio: true }} />
     <Composition id="Parte1" component={Parte1} width={1920} height={1080} fps={30} durationInFrames={PARTE1_FRAMES} defaultProps={{ audio: true }} />
     <Folder name="Dev">
       <Composition id="Test" component={Test} width={1280} height={720} fps={30} durationInFrames={60} />

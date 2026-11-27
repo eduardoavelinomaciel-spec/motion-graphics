@@ -41,3 +41,19 @@ python3 scripts/score_parte1.py public/audio/parte1_raw.wav
 ffmpeg -i public/audio/parte1_raw.wav -af loudnorm=I=-17:TP=-1.5 public/audio/parte1.wav
 npx remotion render Parte1 out/parte1_preview.mp4 --scale=0.5 --gl=swangle
 ```
+
+## Mapa da Parte 2 · Cena 2 (f 1500–3000)
+| Filme | Local | Plano |
+|---|---|---|
+| 0:50–0:55 | 0–150 | Íris abre; Ciro sorri; vira-se: nada. A valsa corta seco (f 62) |
+| 0:55–1:08 | 150–540 | Quebra de quadro → página de HQ com 4 quadros (esq., dir., cima, baixo), `ZIP` em cada |
+| 1:08–1:18 | 540–840 | Quadros se fecham; círculos cada vez mais rápidos, speed lines azuis |
+| 1:18–1:19 | 840–882 | Para. Pixel-dissolve 1920→960→480→320 em 12 frames |
+| 1:19–1:40 | 882–1500 | Mundo 1-bit (marinho/preto, Bayer 4×4), só Ciro em cor; dolly-out longo |
+| 1:25–1:27 | 1050–1110 | Quase silêncio (-37 dB) |
+| 1:28–1:40 | 1140–1500 | Cristais de gelo em pixel; ele se encolhe; leitmotiv lento com Fá natural |
+
+Técnica: o azul aberto (sem chão) é desenhado em canvas 2D (`fx/PixelWorld.tsx`), o que permite o
+pixel-dissolve e o 1-bit exatos; Ciro fica numa camada 3D própria, sem efeito.
+Áudio: `scripts/synth.py` (vozes) + `scripts/score_cena2.py`; normalização por ganho estático
+(não `loudnorm` dinâmico) para não levantar o silêncio.
