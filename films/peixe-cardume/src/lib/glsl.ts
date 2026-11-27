@@ -100,6 +100,7 @@ uniform int uPattern;
 uniform vec3 uPatternColor;
 uniform float uPatternScale;
 uniform float uPatternAmt;
+uniform vec3 uPatternOrigin;
 uniform float uTime;
 uniform vec3 uFogColor;
 uniform float uFogDensity;
@@ -140,6 +141,12 @@ void main() {
     float d = length(c);
     float arc = smoothstep(0.03, 0.0, abs(d - 0.5)) * step(0.0, c.y);
     base = mix(base, base * uPatternColor, arc * uPatternAmt);
+  } else if (uPattern == 4) {
+    // fin rays: thin lines fanning out from an origin point at the fin root
+    float a = atan(vL.y - uPatternOrigin.y, vL.x - uPatternOrigin.x);
+    float ray = abs(sin(a * uPatternScale));
+    float line = smoothstep(0.16, 0.0, ray);
+    base = mix(base, base * uPatternColor, line * uPatternAmt);
   }
 
   float d = dot(N, Ld);
