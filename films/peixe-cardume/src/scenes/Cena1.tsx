@@ -63,7 +63,7 @@ const ciroState = (f: number) => {
   // eyes
   const up: EyeExpr = { ...EXPR.curioso, look: [0.05, 0.5] };
   let expr: EyeExpr = EXPR.neutro;
-  let mouth: Mouth = "smile";
+  let mouth: Mouth = "open";
   if (f >= 300 && f < S.bubbles) expr = mixExpr(EXPR.neutro, up, k(f, 315, 340));
   if (f >= S.bubbles && f < S.ray) expr = mixExpr({ ...EXPR.curioso, look: [0.2, 0.05] }, up, k(f, 400, 470));
   if (f >= S.ray && f < S.reef) {
