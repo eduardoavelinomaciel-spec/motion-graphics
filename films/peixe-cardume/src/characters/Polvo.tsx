@@ -48,7 +48,7 @@ export const Polvo: React.FC<{
       const dir = new THREE.Vector3(Math.cos(phi), 0, Math.sin(phi));
       const front = Math.max(0, Math.sin(phi)); // arms facing camera rise more in jazz pose
       const w = Math.sin(time * 2.4 + i * 0.9);
-      const lift = jazz * (1.2 + 0.4 * front);
+      const lift = jazz * (1.45 - 0.9 * front);
       const pts: THREE.Vector3[] = [];
       for (let k = 0; k <= 6; k++) {
         const f = k / 6;

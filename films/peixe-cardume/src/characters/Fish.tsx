@@ -76,11 +76,11 @@ const mouthCurve = (
   for (let i = 0; i < n; i++) {
     const s = (i / (n - 1)) * 2 - 1;
     const as = Math.abs(s);
-    const t = 0.03 + 0.085 * wide * Math.pow(as, 1.4);
+    const t = 0.02 + 0.036 * wide * Math.pow(as, 1.3);
     let bend = 0.0;
     if (kind === "smile" || kind === "grin" || kind === "open") bend = -0.1 * as * as;
     if (kind === "frown") bend = 0.1 * as * as;
-    const a = Math.PI * (0.64 + bend) * Math.sign(s || 1);
+    const a = Math.PI * (0.78 + bend) * Math.sign(s || 1);
     const x = len / 2 - t * len;
     const k = 1.02;
     pts.push(new THREE.Vector3(x + 0.004, yOff(t) + ry(t) * Math.cos(a) * k, rz(t) * Math.sin(a) * k));
@@ -94,12 +94,41 @@ const mouthCurve = (
     return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 64, 0.02, 6, true);
   }
   if (kind === "o") {
-    // close into a small loop
-    const back = pts.slice(1, -1).reverse().map((p) => p.clone().add(new THREE.Vector3(0, -0.07, 0)));
-    pts.push(...back);
-    return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, true), 48, 0.02, 6, true);
+    const t0 = 0.035;
+    const g = new THREE.SphereGeometry(1, 16, 12);
+    g.scale(0.035, 0.07, 0.065);
+    g.translate(len / 2 - t0 * len + 0.01, yOff(t0) - ry(t0) * 0.55, 0);
+    return g;
   }
-  return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 40, kind === "grin" ? 0.024 : 0.019, 6, false);
+  return new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 40, kind === "grin" ? 0.026 : 0.023, 6, false);
+};
+
+// World position of a pectoral fin tip (side 1 = right/+z, -1 = left/−z), mirroring the render transforms.
+export const finTipWorld = (
+  v: Variant,
+  side: 1 | -1,
+  o: { position: [number, number, number]; rotation: [number, number, number]; scale?: number; lean?: number; finOpen: number; time: number; swimSpeed?: number },
+) => {
+  const prof = bump(v.front, v.back);
+  const ry = (t: number) => v.height * prof(t);
+  const rz = (t: number) => ry(t) * v.width;
+  const px = v.len / 2 - 0.66 * Math.min(v.len, 1.7);
+  const pz = rz(0.45) * 0.8;
+  const flap = o.finOpen + 0.18 * Math.sin(o.time * 7 * (o.swimSpeed ?? 1));
+  const finM = new THREE.Matrix4().compose(
+    new THREE.Vector3(px, -0.2, side * pz),
+    new THREE.Quaternion().setFromEuler(new THREE.Euler(side * 0.25, side * flap, -0.5)),
+    new THREE.Vector3(1, 1, 1),
+  );
+  const leanM = new THREE.Matrix4().makeRotationX(o.lean ?? 0);
+  const s = o.scale ?? 1;
+  const rootM = new THREE.Matrix4().compose(
+    new THREE.Vector3(...o.position),
+    new THREE.Quaternion().setFromEuler(new THREE.Euler(...o.rotation)),
+    new THREE.Vector3(s, s, s),
+  );
+  // pectoral is scaled 1.35×1.5 (shape tip at x≈-0.31)
+  return new THREE.Vector3(-0.31 * 1.35, 0.0, 0).applyMatrix4(finM).applyMatrix4(leanM).applyMatrix4(rootM);
 };
 
 // Dark-pink inside of the open mouth: a strip between the upper lip curve and the lower lip curve,

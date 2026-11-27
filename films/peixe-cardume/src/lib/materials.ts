@@ -36,6 +36,7 @@ export const sceneUniforms = {
   uFogDensity: { value: 0 },
   uSilhouette: { value: 0 },
   uTime: { value: 0 },
+  uCaustic: { value: 0 },
 };
 
 const waveUniforms = () => ({
@@ -109,7 +110,7 @@ export const EXPR: Record<string, EyeExpr> = {
   choro: { look: [0, -0.08], irisScale: 1, pupil: 0.36, lidTop: 0.3, lidBot: 0.14, tilt: 0.4, mode: 0, shine: 1 },
   alegria: { look: [0, 0], irisScale: 1, pupil: 0.4, lidTop: 0, lidBot: 0, tilt: 0, mode: 2, shine: 0 },
   susto: { look: [0, 0.02], irisScale: 0.46, pupil: 0.45, lidTop: 0, lidBot: 0, tilt: 0, mode: 0, shine: 0 },
-  ternura: { look: [0.04, -0.02], irisScale: 1, pupil: 0.44, lidTop: 0.22, lidBot: 0.22, tilt: -0.1, mode: 0, shine: 0.4 },
+  ternura: { look: [0.04, -0.02], irisScale: 1, pupil: 0.44, lidTop: 0.14, lidBot: 0.3, tilt: 0, mode: 0, shine: 0.4 },
   estrela: { look: [0.1, 0.06], irisScale: 1.05, pupil: 0, lidTop: 0, lidBot: 0, tilt: 0, mode: 1, shine: 0.5 },
   calma: { look: [0.05, -0.04], irisScale: 0.95, pupil: 0.45, lidTop: 0.16, lidBot: 0.2, tilt: 0, mode: 0, shine: 0 },
   sonolento: { look: [0.04, -0.06], irisScale: 0.9, pupil: 0.45, lidTop: 0.4, lidBot: 0.12, tilt: 0, mode: 0, shine: 0 },

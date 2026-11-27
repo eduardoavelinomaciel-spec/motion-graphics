@@ -38,6 +38,35 @@ vec3 voronoi(vec3 x) {
 }
 `;
 
+export const CAUSTIC_GLSL = /* glsl */ `
+vec2 chash2(vec2 p) {
+  p = vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5, 183.3)));
+  return fract(sin(p) * 43758.5453);
+}
+float cedge(vec2 p, float t) {
+  vec2 n = floor(p);
+  vec2 f = fract(p);
+  float f1 = 8.0;
+  float f2 = 8.0;
+  for (int j = -1; j <= 1; j++)
+  for (int i = -1; i <= 1; i++) {
+    vec2 g = vec2(float(i), float(j));
+    vec2 o = chash2(n + g);
+    o = 0.5 + 0.42 * sin(t + 6.2831 * o);
+    vec2 r = g + o - f;
+    float d = dot(r, r);
+    if (d < f1) { f2 = f1; f1 = d; } else if (d < f2) { f2 = d; }
+  }
+  return sqrt(f2) - sqrt(f1);
+}
+// crisp, anime-style caustic network (two drifting layers)
+float caustic(vec2 p, float t) {
+  float a = cedge(p * 1.15, t * 0.9);
+  float b = cedge(p * 1.7 + vec2(3.1, 1.7), t * 1.2 + 2.0);
+  return smoothstep(0.09, 0.035, a) * 0.65 + smoothstep(0.08, 0.03, b) * 0.4;
+}
+`;
+
 export const TOON_VERT = /* glsl */ `
 ${WAVE_GLSL}
 varying vec3 vN;
@@ -55,6 +84,8 @@ void main() {
 
 export const TOON_FRAG = /* glsl */ `
 ${VORONOI_GLSL}
+${CAUSTIC_GLSL}
+uniform float uCaustic;
 uniform vec3 uColor;
 uniform vec3 uTip;
 uniform vec3 uTipAxis;
@@ -125,6 +156,8 @@ void main() {
   vec3 midC = base * mix(vec3(0.84), uShadowTint, 0.25);
   vec3 lightC = base * 1.04;
   vec3 col = mix(mix(shadowC, midC, t1), lightC, t2);
+
+  col += uCaustic * caustic(vW.xz, uTime) * t1 * vec3(0.55, 0.62, 0.6);
 
   vec3 H = normalize(Ld + V);
   col += uSpec * smoothstep(0.955, 0.965, dot(N, H)) * vec3(1.0);
