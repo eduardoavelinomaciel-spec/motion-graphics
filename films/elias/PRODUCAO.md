@@ -32,3 +32,7 @@ npx remotion still EquipeSil out/EquipeSil.png --gl=swangle
 ## Cena 2 — página de HQ (0:50–1:40, origem do dom)
 - `src/scenes/Cena2.tsx`: 5 quadros de HQ com mini-cenas 3D (criança sente ondas / separa orbes em frascos / adulto filtra a multidão / ajuda Rita: azul→menta / noite, cidade acesa). Câmera de página foca cada quadro e abre na página inteira (f1320–1400), zoom final + fade (f1455–1500).
 - Áudio: `scripts/score_cena2.py` → `public/audio/cena2.wav` (-18,5 LUFS). Render igual à Parte 1 (≈0,65 s/quadro).
+
+## Cena 3 — o padeiro (1:40–2:30)
+- `src/scenes/Cena3.tsx` + `world/Bakery.tsx` + `fx/Pictoballoon.tsx` (balão pictográfico com 2 mini-quadros: bolo premiado / multidão aplaudindo). Antônio triste (aura azul+laranja) → Elias senta, pão quente → balão → primeiro sorriso (estrelas amarelas, luz da padaria fica dourada). Elias sai pela porta; dissolve em pixels nos últimos 12 quadros.
+- Áudio: `scripts/score_cena3.py` → `public/audio/cena3.wav`.
