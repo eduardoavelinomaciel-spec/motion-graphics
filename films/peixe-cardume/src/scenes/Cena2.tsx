@@ -31,7 +31,7 @@ const openLook = () => {
 type CiroPose = { pos: [number, number, number]; rot: [number, number, number]; expr: EyeExpr; mouth: Mouth; swim: number; swimSpeed: number; fin: number; scale: number; t: number };
 
 const CiroLayer: React.FC<{ cam: Cam; pose: CiroPose; w: number; h: number }> = ({ cam, pose, w, h }) => (
-  <ThreeCanvas width={w} height={h} flat linear={false} gl={{ antialias: true, alpha: true }} camera={{ fov: cam.fov, position: [0, 0, 3] }} style={{ position: "absolute", left: 0, top: 0 }}>
+  <ThreeCanvas width={Math.round(w)} height={Math.round(h)} flat linear={false} gl={{ antialias: true, alpha: true }} camera={{ fov: cam.fov, position: [0, 0, 3] }} style={{ position: "absolute", left: 0, top: 0 }}>
     <CameraRig cam={cam} />
     <Fish variant={CIRO} time={pose.t} position={pose.pos} rotation={pose.rot} expr={pose.expr} mouth={pose.mouth}
       swim={pose.swim} swimSpeed={pose.swimSpeed} finOpen={pose.fin} scale={pose.scale} />
