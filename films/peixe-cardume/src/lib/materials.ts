@@ -8,7 +8,7 @@ import {
   TOON_VERT,
 } from "./glsl";
 
-export const PATTERN = { none: 0, shell: 1, chroma: 2, scales: 3 } as const;
+export const PATTERN = { none: 0, shell: 1, chroma: 2, scales: 3, rays: 4 } as const;
 
 export type ToonOpts = {
   color: string;
@@ -24,6 +24,7 @@ export type ToonOpts = {
   patternColor?: string;
   patternScale?: number;
   patternAmt?: number;
+  patternOrigin?: [number, number, number];
   transparent?: boolean;
   side?: THREE.Side;
 };
@@ -68,6 +69,7 @@ export const makeToon = (o: ToonOpts, wave?: WaveUniforms) =>
       uPatternColor: { value: new THREE.Color(o.patternColor ?? "#000000") },
       uPatternScale: { value: o.patternScale ?? 4 },
       uPatternAmt: { value: o.patternAmt ?? 1 },
+      uPatternOrigin: { value: new THREE.Vector3(...(o.patternOrigin ?? [0, 0, 0])) },
       uOpacity: { value: 1 },
     },
   });
