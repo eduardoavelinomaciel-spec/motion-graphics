@@ -11,6 +11,7 @@ import { Parte2, PARTE2_FRAMES } from "./scenes/Parte2";
 import { Filme, FILME_FRAMES } from "./scenes/Filme";
 import { CiroViews, MaeViews, CiroSil, MaeSil, CiroExpr } from "./sheets/Ficha";
 import { MarisaViews, MarisaSil, PolvoViews, PolvoSil, SeahorseSheet } from "./sheets/Ficha2";
+import { Abertura, ABERTURA_FRAMES } from "./scenes/Abertura";
 import { FishCompare } from "./sheets/FishCompare";
 
 export const RemotionRoot: React.FC = () => (
@@ -31,6 +32,9 @@ export const RemotionRoot: React.FC = () => (
     <Folder name="Dev">
       <Composition id="Test" component={Test} width={1280} height={720} fps={30} durationInFrames={60} />
       <Composition id="FishCompare" component={FishCompare} width={1280} height={720} fps={30} durationInFrames={60} />
+    </Folder>
+    <Folder name="Gancho">
+      <Composition id="Abertura" component={Abertura} width={1920} height={1080} fps={30} durationInFrames={ABERTURA_FRAMES} />
     </Folder>
     <Folder name="Fichas">
       <Composition id="CiroViews" component={CiroViews} width={1920} height={1080} fps={30} durationInFrames={60} />

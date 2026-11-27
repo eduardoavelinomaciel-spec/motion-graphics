@@ -1,19 +1,44 @@
 import React from "react";
-import { Sequence, staticFile, Audio } from "remotion";
+import { AbsoluteFill, Sequence, staticFile, Audio, useCurrentFrame, useVideoConfig } from "remotion";
 import { Titulo, TITULO_FRAMES } from "./Titulo";
 import { Cena1, CENA1_FRAMES } from "./Cena1";
+import { Abertura, ABERTURA_FRAMES } from "./Abertura";
+import { Caption, fontCss } from "./common";
 
-// Título + Cena 1 (film f 0–1500), with the scored audio for the stretch.
-export const PARTE1_FRAMES = TITULO_FRAMES + CENA1_FRAMES;
+// Gancho (pergunta direta) + Título + Cena 1, com o áudio de cada trecho.
+export const PARTE1_FRAMES = ABERTURA_FRAMES + TITULO_FRAMES + CENA1_FRAMES;
+
+const BolhaCard: React.FC = () => {
+  const t = useCurrentFrame() / useVideoConfig().fps;
+  return (
+    <AbsoluteFill>
+      <style>{fontCss}</style>
+      <Caption t={t} from={0.3} to={2.6} text="TUDO COMEÇOU COM UMA BOLHA…" x="50%" y="84%" size={60} />
+    </AbsoluteFill>
+  );
+};
 
 export const Parte1: React.FC<{ audio: boolean }> = ({ audio }) => (
   <>
-    <Sequence name="Título" durationInFrames={TITULO_FRAMES}>
-      <Titulo />
+    <Sequence name="Gancho" durationInFrames={ABERTURA_FRAMES}>
+      <Abertura />
     </Sequence>
-    <Sequence name="Cena 1" from={TITULO_FRAMES} durationInFrames={CENA1_FRAMES}>
+    <Sequence name="Título" from={ABERTURA_FRAMES} durationInFrames={TITULO_FRAMES}>
+      <Titulo />
+      <BolhaCard />
+    </Sequence>
+    <Sequence name="Cena 1" from={ABERTURA_FRAMES + TITULO_FRAMES} durationInFrames={CENA1_FRAMES}>
       <Cena1 />
     </Sequence>
-    {audio ? <Audio src={staticFile("audio/parte1.wav")} /> : null}
+    {audio ? (
+      <>
+        <Sequence name="Áudio gancho" durationInFrames={ABERTURA_FRAMES}>
+          <Audio src={staticFile("audio/gancho.wav")} />
+        </Sequence>
+        <Sequence name="Áudio título e cena 1" from={ABERTURA_FRAMES}>
+          <Audio src={staticFile("audio/parte1.wav")} />
+        </Sequence>
+      </>
+    ) : null}
   </>
 );
