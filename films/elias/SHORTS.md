@@ -14,3 +14,6 @@ Método: skill yt-shorts (cortes que se sustentam sozinhos, nova primeira frase,
 Descrição padrão: "Você já sentiu que todos ao seu redor precisavam de você, e que ninguém percebia o que você precisava? 🎬 História completa no canal: O Homem que Sentia Tudo. #shorts #animação #empatia"
 Comentário fixado (todos): a pergunta final do short + "Inscreva-se para a próxima história."
 Ordem de postagem sugerida: 3, 1, 6, 4, 2, 5 (um por dia; o 4 e o 3 são os mais "compartilháveis"). Publicar o vídeo longo antes ou junto e linkar nos Shorts.
+
+## Versão 2 (cortes rápidos + isca aos 6 s)
+Troca de enquadramento (zoom/recorte) a cada ~3 s; aos 5,6 s aparece a isca "NO FINAL: …" (promessa do que vem no fim) e depois o lembrete "FIQUE ATÉ O FINAL >>". Script: `scripts/shorts.py`.

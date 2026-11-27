@@ -51,24 +51,47 @@ SHORTS = [
   end=[["Reparou nos pixels?", "Assista de novo"], ["E COMENTA SUA COR"]]),
 ]
 
+TEASE = {1: 'ESPERE O FINAL: O QUE O DESCONHECIDO FEZ', 2: 'NO FINAL, O VELHINHO FAZ ALGO RARO', 3: 'NO FINAL, ELE NÃO AGUENTA MAIS', 4: 'NO FINAL: A PERGUNTA QUE MUDA TUDO', 5: 'NO FINAL: O PRIMEIRO SORRISO DELE', 6: 'NO FINAL: UMA PERGUNTA SÓ PRA VOCÊ'}
+ZOOMS = [1.0, 1.4, 1.0, 1.5, 1.2, 1.0, 1.45, 1.0, 1.35, 1.0, 1.5, 1.0]
+SHIFT = [0, -90, 0, 80, 40, 0, -60, 0, 70, 0, -40, 0]
+
+def pieces(seg, step=3.0):
+    out = []
+    k = 0
+    for a, b in seg:
+        t = a
+        while t < b - 0.01:
+            e = min(b, t + step) if b - (t + step) > 1.2 else b
+            out.append((t, e, ZOOMS[k % len(ZOOMS)], SHIFT[k % len(SHIFT)]))
+            t = e; k += 1
+    return out
+
 def build(s):
     dur = sum(b - a for a, b in s["seg"])
-    inputs = ["-i", SRC] * len(s["seg"])
-    parts, v, a = [], [], []
-    for i, (t0, t1) in enumerate(s["seg"]):
-        parts.append(f"[{i}:v]trim={t0}:{t1},setpts=PTS-STARTPTS[v{i}];[{i}:a]atrim={t0}:{t1},asetpts=PTS-STARTPTS[a{i}]")
-        v.append(f"[v{i}]"); a.append(f"[a{i}]")
-    n = len(s["seg"])
-    parts.append("".join(f"{v[i]}{a[i]}" for i in range(n)) + f"concat=n={n}:v=1:a=1[cv][ca]")
+    ps = pieces(s["seg"])
+    P = len(ps); n = len(s["seg"])
     x = s["x"]
-    parts.append(f"[cv]split[bg][fg];[bg]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:6,eq=brightness=-0.18:saturation=1.2[b];"
-                 f"[fg]crop=1080:1080:{x}:0[f];[b][f]overlay=0:430[base]")
+    inputs = ["-i", SRC]
+    parts = [f"[0:v]split={P}" + "".join(f"[s{i}]" for i in range(P))]
+    for i, (t0, t1, z, sh) in enumerate(ps):
+        cs = int(1080 / z); cx = max(0, min(1920 - cs, x + 540 - cs // 2 + sh)); cy = max(0, min(1080 - cs, 500 - cs // 2))
+        parts.append(f"[s{i}]trim={t0}:{t1},setpts=PTS-STARTPTS,crop={cs}:{cs}:{cx}:{cy},scale=1080:1080:flags=lanczos[p{i}]")
+    parts.append("".join(f"[p{i}]" for i in range(P)) + f"concat=n={P}:v=1:a=0[fgc]")
+    parts.append(f"[0:a]asplit={n}" + "".join(f"[q{i}]" for i in range(n)))
+    for i, (t0, t1) in enumerate(s["seg"]):
+        parts.append(f"[q{i}]atrim={t0}:{t1},asetpts=PTS-STARTPTS[a{i}]")
+    parts.append("".join(f"[a{i}]" for i in range(n)) + f"concat=n={n}:v=0:a=1[ca]")
+    parts.append(f"[fgc]split[fg1][bgs];[bgs]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:6,eq=brightness=-0.18:saturation=1.2[b];[b][fg1]overlay=0:430[base]")
     # overlays
     ovs = []
     def add(im, name, x0, y0, t0, t1):
         p = f"/tmp/ov/s{s['n']}_{name}.png"; im.save(p); ovs.append((p, x0, y0, t0, t1))
     add(txt(s["hook"], 112), "hook", 0, 130, 0, 3.2)
-    add(txt([[("O HOMEM QUE SENTIA TUDO", "#F4F1EA")]], 56, stroke=7), "tag", 0, 120, 3.2, dur - 4.5)
+    add(txt([[("O HOMEM QUE SENTIA TUDO", "#F4F1EA")]], 56, stroke=7), "tag", 0, 120, 3.2, 5.6)
+    tz = TEASE[s["n"]].split(": ") if ": " in TEASE[s["n"]] else ["", TEASE[s["n"]]]
+    tl = [[(w, Y)] for w in ([TEASE[s["n"]][:TEASE[s["n"]].index(" ", 14)], TEASE[s["n"]][TEASE[s["n"]].index(" ", 14)+1:]])]
+    add(txt(tl, 100), "tease", 0, 130, 5.6, 9.8)
+    add(txt([[("FIQUE ATÉ O FINAL  >>", Y)]], 60, stroke=7), "stay", 0, 120, 9.8, dur - 4.5)
     for k, (t0, t1, lines) in enumerate(s["caps"]):
         if t0 < dur - 4.6: add(txt(lines, 92), f"cap{k}", 0, 1560, t0, min(t1, dur - 4.6))
     e = s["end"]
